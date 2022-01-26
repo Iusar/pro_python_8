@@ -1,0 +1,5 @@
+sqlalchemy
+vk_api
+requests
+datetime
+json
