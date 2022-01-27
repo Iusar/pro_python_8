@@ -41,7 +41,7 @@ if __name__ == '__main__':
         for user in users.get('items'):
 
             # Проверка на количество найденных пользователей по условию не больше 10 за раз
-            if len(overall_result) == 3:
+            if len(overall_result) == 10:
                 break
 
             # Проверка на закрытый профиль

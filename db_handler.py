@@ -3,7 +3,7 @@ import sqlalchemy
 # Не используется в основной программе. Только для создания БД или отчистки
 class Base_maker:
     def __init__(self):
-        self.db = 'postgresql://vkinder_admin:admin@localhost:5432/vkinder_base'
+        self.db =
         self.engine = sqlalchemy.create_engine(self.db)
         self.connection = self.engine.connect()
 
@@ -46,7 +46,7 @@ class Base_maker:
 # Используется в основной программе
 class Base_operator:
     def __init__(self):
-        self.db = 'postgresql://vkinder_admin:admin@localhost:5432/vkinder_base'
+        self.db =
         self.engine = sqlalchemy.create_engine(self.db)
         self.connection = self.engine.connect()
 
