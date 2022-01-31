@@ -88,7 +88,7 @@ class Base_operator:
         # clients
         self.connection.execute(f"""INSERT INTO clients(user_id) VALUES({user_id}) ON CONFLICT DO NOTHING;
         """)
-        pass
+
 
     def find_showed_persons(self, user_id):
         list_id = []

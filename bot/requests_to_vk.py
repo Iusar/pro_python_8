@@ -30,6 +30,5 @@ def get_photos_request_to_vk(vk_user_id):
         return json_from_vk
     else:
         print(f'error :( {photos_from_vk.status_code}')
-        pass
 
 
