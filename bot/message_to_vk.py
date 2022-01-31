@@ -42,12 +42,18 @@ def ask_info_for_request(user_id, message):
             if event.to_me:
                 return event.text
 
-# Функция для оотправки ответа с фотками(не обязательно)
+# Функция для оотправки
 def write_answer(user_id, message):
     token = oh.get_info('group_token')
     vk_session = vk_api.VkApi(token=token)
     vk = vk_session.get_api()
     # Уникальные варианты из списка ВК
-    vk_session.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': randrange(10 ** 7)})
+    vk_session.method('messages.send', {'user_id': user_id, 'message': message,   'random_id': randrange(10 ** 7)})
 
-
+# Функция для оотправки ответа с фотками(не обязательно)
+def send_photo(user_id, attachment):
+    token = oh.get_info('group_token')
+    vk_session = vk_api.VkApi(token=token)
+    vk = vk_session.get_api()
+    # Уникальные варианты из списка ВК
+    vk_session.method('messages.send', {'user_id': user_id, 'attachment': attachment, 'random_id': randrange(10 ** 7)})

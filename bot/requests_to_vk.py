@@ -2,6 +2,8 @@ import vk_api
 import os_handler as oh
 import requests
 
+
+# основной поисковой запрос
 def request_to_vk(user_id, age_from, age_to, sex, status, hometown):
 
     vk_session = vk_api.VkApi(token=oh.get_info('user_token'))

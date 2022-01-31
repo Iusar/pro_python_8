@@ -3,7 +3,7 @@ import sqlalchemy
 # Не используется в основной программе. Только для создания БД или отчистки
 class Base_maker:
     def __init__(self):
-        self.db =
+        self.db = 'postgresql://vkinder_admin:admin@localhost:5432/vkinder_base'
         self.engine = sqlalchemy.create_engine(self.db)
         self.connection = self.engine.connect()
 
@@ -46,7 +46,7 @@ class Base_maker:
 # Используется в основной программе
 class Base_operator:
     def __init__(self):
-        self.db =
+        self.db = 'postgresql://vkinder_admin:admin@localhost:5432/vkinder_base'
         self.engine = sqlalchemy.create_engine(self.db)
         self.connection = self.engine.connect()
 
@@ -61,7 +61,7 @@ class Base_operator:
                                                                {time_reg},
                                                                {showed_person_id},
                                                                {favorite_person});""")
-        pass
+
 
 
     def add_search_reguest(self, user_id, time_reg, age_from, age_to, sex, status, hometown):
@@ -81,7 +81,7 @@ class Base_operator:
                                                                {status},
                                                                \'{hometown}\');""") # долбанное бл.. экранирование проглоченных пйтоном кавычек
 
-        pass
+
 
 
     def add_client(self, user_id):

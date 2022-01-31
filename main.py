@@ -32,6 +32,18 @@ if __name__ == '__main__':
         # Отправляем запрос
         users = requests_to_vk.request_to_vk(user_id, age_from, age_to, sex, status, hometown)
 
+        # Запись нового клиента в базу
+        db_update.add_client(user_id=user_id)
+
+        # Запись самого запроса в базу user_id, time_reg, age_from, age_to, sex, status, hometown
+        db_update.add_search_reguest(user_id=user_id,
+                                     time_reg=time_reg,
+                                     age_from=age_from,
+                                     age_to=age_to,
+                                     sex=sex,
+                                     status=status,
+                                     hometown=hometown)
+
         # Выполняем выборку всех найденных раенее персон в список для пользователя
         found_persons_earlier = db_update.find_showed_persons(user_id)
 
@@ -47,8 +59,8 @@ if __name__ == '__main__':
             # Проверка на закрытый профиль
             if user.get('is_closed') is True:
                 continue
-            print(found_persons_earlier)
-            # Проверка на наличие в бази запросов эот этого пользователя found_persons_earlier != None and
+
+            # Проверка на наличие в базе запросов эот этого пользователя
             if user.get('id') in found_persons_earlier:
                 continue
 
@@ -62,15 +74,16 @@ if __name__ == '__main__':
             found_user_first_name = user.get('first_name')
             found_user_last_name = user.get('last_name')
             # Топ три фото
-            photo_1 = photo_request[0].get('sizes')[-1].get('url')
-            photo_2 = photo_request[1].get('sizes')[-1].get('url')
-            photo_3 = photo_request[2].get('sizes')[-1].get('url')
-            # Ответ
+            owner = user.get('id')
+            photo_1 = photo_request[0].get('id')
+            photo_2 = photo_request[1].get('id')
+            photo_3 = photo_request[2].get('id')
+            # Ответ "attachment": "photo-57846937_457307562"
             message_to_vk.write_answer(user_id, found_user_first_name + ' ' + found_user_last_name)
-            message_to_vk.write_answer(user_id, photo_1)
-            message_to_vk.write_answer(user_id, photo_2)
-            message_to_vk.write_answer(user_id, photo_3)
-            # Дополняемлист
+            message_to_vk.send_photo(user_id, 'photo' + str(owner) + '_' + str(photo_1))
+            message_to_vk.send_photo(user_id, 'photo' + str(owner) + '_' + str(photo_2))
+            message_to_vk.send_photo(user_id, 'photo' + str(owner) + '_' + str(photo_3))
+            # Дополняем лист
             overall_result.append(dict({'link': 'https://vk.com/id' + str(user.get('id')), 'top_photos': [photo_1, photo_2, photo_3]}))
 
             db_update.add_showed_persons(user_id=user_id,
@@ -81,15 +94,5 @@ if __name__ == '__main__':
         # Отправляем на сохранить как json
         write_result(str('Search request ' + time_reg), overall_result)
 
-        # Запись нового клиента в базу
-        db_update.add_client(user_id=user_id)
 
-        # Запись самого запроса в базу user_id, time_reg, age_from, age_to, sex, status, hometown
-        db_update.add_search_reguest(user_id=user_id,
-                                     time_reg=time_reg,
-                                     age_from=age_from,
-                                     age_to=age_to,
-                                     sex=sex,
-                                     status=status,
-                                     hometown=hometown)
         # Собственно всё. Прогрэм терминейтед.

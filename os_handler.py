@@ -17,3 +17,9 @@ def write_token(filename, token_to_write):
 def write_result(file_name, overall_result):
     with open(r'C:\\overall_result\\' + file_name + '.json', 'w') as f:
         json.dump(overall_result, f, ensure_ascii=False, indent=4)
+
+# Функция забирает строку подключения к базе данных
+def get_sql_string():
+    if os.path.isdir(r'C:\\SQL-string') == True and os.path.isfile(r'C:\\SQL-string\\' + 'sql_string.txt') == True:
+        with open(r'C:\\SQL-string\\' + 'sql_string.txt', 'r') as log:
+            return str(log.read())
