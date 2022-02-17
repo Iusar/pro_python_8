@@ -7,7 +7,7 @@ from db_handler import Base_operator
 if __name__ == '__main__':
 
     user_id = 681175888
-
+    group_id = 207956541
     # Экземпляр апдейта базы
     db_update = Base_operator()
 
@@ -28,7 +28,7 @@ if __name__ == '__main__':
                                                              '8 - в гражданском браке')
 
         hometown = str(message_to_vk.ask_info_for_request(user_id, 'Выберите город').title())
-
+        favorite_person=bool
         # Отправляем запрос
         users = requests_to_vk.request_to_vk(user_id, age_from, age_to, sex, status, hometown)
 
@@ -83,13 +83,17 @@ if __name__ == '__main__':
             message_to_vk.send_photo(user_id, 'photo' + str(owner) + '_' + str(photo_1))
             message_to_vk.send_photo(user_id, 'photo' + str(owner) + '_' + str(photo_2))
             message_to_vk.send_photo(user_id, 'photo' + str(owner) + '_' + str(photo_3))
+
+            favorite_person = message_to_vk.send_keyboard(user_id, 'https://vk.com/id' + str(user.get('id')))
+
+
             # Дополняем лист
             overall_result.append(dict({'link': 'https://vk.com/id' + str(user.get('id')), 'top_photos': [photo_1, photo_2, photo_3]}))
 
             db_update.add_showed_persons(user_id=user_id,
                                          time_reg=time_reg,
                                          showed_person_id=user.get('id'),
-                                         favorite_person=False)
+                                         favorite_person=favorite_person)
 
         # Отправляем на сохранить как json
         write_result(str('Search request ' + time_reg), overall_result)
